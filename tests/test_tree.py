@@ -7,7 +7,7 @@
 # Python release: 3.4.1
 #
 # Date: 2016-10-12 16:50:12
-# Last modified: 2016-10-13 09:59:00
+# Last modified: 2016-10-13 10:49:56
 
 """
 Test for parser.py
@@ -87,6 +87,12 @@ class TestParser:
         ans = ('Node:IP(0,3) Node:VP(0,1) Node:NP(1,3) '
                'Node:NN(1,2) Node:NN(2,3)')
         values = tree.non_terminal
+        values = [str(v) for v in values]
+        values = ' '.join(values)
+        assert_equals(values, ans)
+
+        ans = 'Node:IP(0,3) Node:NP(1,3)'
+        values = tree.label
         values = [str(v) for v in values]
         values = ' '.join(values)
         assert_equals(values, ans)

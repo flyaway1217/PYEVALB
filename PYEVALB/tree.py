@@ -7,7 +7,7 @@
 # Python release: 3.4.1
 #
 # Date: 2016-10-11 09:30:12
-# Last modified: 2016-10-13 10:29:35
+# Last modified: 2016-10-13 10:48:57
 
 """
 Bracket Tree Class.
@@ -102,7 +102,12 @@ class Tree:
             self._root = root
 
         # Initialization
-        self._terminal, self._non_terminal, self._depth = self._get_nodes()
+        values = self._get_nodes()
+        self._terminal = values[0]
+        self._non_terminal = values[1]
+        self._label = values[2]
+        self._depth = values[3]
+
         self._pos_sentence = self._get_pos_sentence(self.root)
         self._sentence, self._poss = self._extract_sequence(self._pos_sentence)
 
@@ -120,14 +125,27 @@ class Tree:
     @property
     def terminal(self):
         """Return a list of terminal node.
+
+        All the leaf nodes, which means it
+        only includes word node.
         """
         return self._terminal
 
     @property
     def non_terminal(self):
         """Return a list of non-terminal node.
+
+        All nodes except leaf node, which means it
+        also includes the POS tag node.
         """
         return self._non_terminal
+
+    @property
+    def label(self):
+        """Return a list of label nodes.
+        Includes all the nodes except pos tag and word node.
+        """
+        return self._label
 
     @property
     def depth(self):
@@ -235,7 +253,9 @@ class Tree:
         depth = self._depth(self.root, nodes)
         terminal = [node for node in nodes if node.isLeaf() is True]
         non_terminal = [node for node in nodes if node.isLeaf() is False]
-        return terminal, non_terminal, depth
+        labels = [node for node in nodes
+                  if node.isPos() is False and node.isLeaf() is False]
+        return terminal, non_terminal, labels, depth
 
     def _depth(self, node, nodes):
         """Transfer the ndoes in DFS order.
