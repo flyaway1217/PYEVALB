@@ -7,7 +7,7 @@
 # Python release: 3.4.1
 #
 # Date: 2016-10-11 09:30:12
-# Last modified: 2016-10-13 10:58:56
+# Last modified: 2016-10-13 11:33:33
 
 """
 Bracket Tree Class.
@@ -72,13 +72,19 @@ class Node:
         self._span = value
 
     ########################################################
-    # Helping methods
+    # Magic methods
     ########################################################
     def __repr__(self):
         s = 'Node:' + self.value
         p = '({a},{b})'.format(a=self.span.s,
                                b=self.span.e)
         return s+p
+
+    def __eq__(self, node):
+        return str(self) == str(node)
+
+    def __hash__(self):
+        return hash(str(self))
 
 
 class Tree:
