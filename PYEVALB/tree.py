@@ -7,7 +7,7 @@
 # Python release: 3.4.1
 #
 # Date: 2016-10-11 09:30:12
-# Last modified: 2016-10-13 09:58:23
+# Last modified: 2016-10-13 10:29:35
 
 """
 Bracket Tree Class.
@@ -119,26 +119,47 @@ class Tree:
 
     @property
     def terminal(self):
+        """Return a list of terminal node.
+        """
         return self._terminal
 
     @property
     def non_terminal(self):
+        """Return a list of non-terminal node.
+        """
         return self._non_terminal
 
     @property
     def depth(self):
+        """Return the depth of current tree.
+        """
         return self._depth
 
     @property
     def sentence(self):
+        """Return a list of words.
+
+        For example:
+        [上海 浦东 开发 与 法制 建设 同步]
+        """
         return self._sentence
 
     @property
     def poss(self):
+        """Return a list of pos tag
+
+        For example:
+        [NR NR NN CC NN NN VV]
+        """
         return self._poss
 
     @property
     def pos_sentence(self):
+        """Return a list of segments.
+
+        For example:
+        [上海_NN 浦东_NR 开发_NN 与_CC 法制_NN 建设_NN 同步_VV]
+        """
         return self._pos_sentence
 
     ########################################################
