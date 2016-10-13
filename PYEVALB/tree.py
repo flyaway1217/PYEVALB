@@ -7,7 +7,7 @@
 # Python release: 3.4.1
 #
 # Date: 2016-10-11 09:30:12
-# Last modified: 2016-10-13 09:00:29
+# Last modified: 2016-10-13 09:58:23
 
 """
 Bracket Tree Class.
@@ -15,9 +15,9 @@ Bracket Tree Class.
 Loading the bracket trees.
 """
 
-# import collections
+import collections
 
-# Span = collections.namedtuple('Span', ['s', 'e'])
+Span = collections.namedtuple('Span', ['s', 'e'])
 
 
 class Node:
@@ -39,10 +39,14 @@ class Node:
         """
         self._value = value.strip()
         self._children = []
-        # self._span = Span(-1, -1)
+        self._span = Span(-1, -1)
 
     def isLeaf(self):
-        return len(self._children) == 0
+        return len(self.children) == 0
+
+    def isPos(self):
+        return (len(self.children) == 1 and
+                self.children[0].isLeaf() is True)
 
     ########################################################
     # Property methods
@@ -59,20 +63,22 @@ class Node:
     def children(self, children):
         self._children = children
 
-    # @property
-    # def span(self):
-    #     return self._span
+    @property
+    def span(self):
+        return self._span
 
-    # @span.setter
-    # def span(self, value):
-    #     self._span = value
+    @span.setter
+    def span(self, value):
+        self._span = value
 
     ########################################################
     # Helping methods
     ########################################################
     def __repr__(self):
         s = 'Node:' + self.value
-        return s
+        p = '({a},{b})'.format(a=self.span.s,
+                               b=self.span.e)
+        return s+p
 
 
 class Tree:
@@ -99,6 +105,10 @@ class Tree:
         self._terminal, self._non_terminal, self._depth = self._get_nodes()
         self._pos_sentence = self._get_pos_sentence(self.root)
         self._sentence, self._poss = self._extract_sequence(self._pos_sentence)
+
+        # Set the span for each node
+        self._length = 0
+        self._set_span(self.root)
 
     ########################################################
     # Property methods
@@ -152,8 +162,7 @@ class Tree:
             str - A bracket string.
         """
         # For pos tag label node
-        if (len(node.children) == 1 and
-                node.children[0].isLeaf() is True):
+        if node.isPos():
             pos_tag = node.value
             word = node.children[0].value
             s = '('+' '.join([pos_tag, word])+')'
@@ -178,7 +187,7 @@ class Tree:
                 ['上海_NR', '浦东_NR', '开发_NN', '与_CC',
                 '法制_NN', '建设_NN', '同步_VV']
         """
-        if len(node.children) == 1 and node.children[0].isLeaf():
+        if node.isPos():
             leaf = node.children[0]
             return ['_'.join([leaf.value, node.value])]
         else:
@@ -219,5 +228,20 @@ class Tree:
         else:
             return 0
 
+    def _set_span(self, node):
+        if node.isLeaf():
+            node.span = Span(self._length, self._length+1)
+            self._length += 1
+            return
+        else:
+            for child in node.children:
+                self._set_span(child)
+            node.span = Span(
+                    node.children[0].span.s,
+                    node.children[-1].span.e)
+
+    ########################################################
+    # Magic methods
+    ########################################################
     def __repr__(self):
         return self._to_bracket(self.root)
