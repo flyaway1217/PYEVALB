@@ -7,7 +7,7 @@
 # Python release: 3.4.1
 #
 # Date: 2016-10-11 09:30:12
-# Last modified: 2016-10-13 10:48:57
+# Last modified: 2016-10-13 10:58:56
 
 """
 Bracket Tree Class.
@@ -105,7 +105,7 @@ class Tree:
         values = self._get_nodes()
         self._terminal = values[0]
         self._non_terminal = values[1]
-        self._label = values[2]
+        self._non_terminal_labels = values[2]
         self._depth = values[3]
 
         self._pos_sentence = self._get_pos_sentence(self.root)
@@ -123,7 +123,7 @@ class Tree:
         return self._root
 
     @property
-    def terminal(self):
+    def terminals(self):
         """Return a list of terminal node.
 
         All the leaf nodes, which means it
@@ -132,7 +132,7 @@ class Tree:
         return self._terminal
 
     @property
-    def non_terminal(self):
+    def non_terminals(self):
         """Return a list of non-terminal node.
 
         All nodes except leaf node, which means it
@@ -141,11 +141,11 @@ class Tree:
         return self._non_terminal
 
     @property
-    def label(self):
+    def non_terminal_labels(self):
         """Return a list of label nodes.
         Includes all the nodes except pos tag and word node.
         """
-        return self._label
+        return self._non_terminal_labels
 
     @property
     def depth(self):
