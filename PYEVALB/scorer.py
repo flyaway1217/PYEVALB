@@ -7,7 +7,7 @@
 # Python release: 3.4.1
 #
 # Date: 2016-10-13 10:02:18
-# Last modified: 2016-10-13 16:06:10
+# Last modified: 2016-10-14 10:09:05
 
 """
 PYEVALB: Evalb in Python version.
@@ -100,6 +100,17 @@ class Result:
         for name in Result.STATISTICS_TABLE:
             self._staticis[name] = 0
 
+    def tolist(self):
+        reval = []
+        for name in Result.STATISTICS_TABLE:
+            value = self._staticis[name]
+            if type(value) == int:
+                value = '%d' % value
+            else:
+                value = '%.2f' % value
+            reval.append(value)
+        return reval
+
     def __repr__(self):
         sout = ''
         for name in Result.STATISTICS_TABLE:
@@ -128,17 +139,6 @@ class Result:
         else:
             print(name)
             raise AttributeError
-
-    def tostring(self):
-        sout = ''
-        for name in Result.STATISTICS_TABLE:
-            value = self._staticis[name]
-            if type(value) == int:
-                s = '{0: >7d}'.format(value)
-            else:
-                s = '{0: >9.2f}'.format(value*100)
-            sout += s
-        return sout
 
 
 class Scorer:
@@ -256,99 +256,3 @@ class Scorer:
                 current_result.ID = ID
                 results.append(current_result)
         return results
-
-    # def result2string(self, results):
-    #     string = ''
-    #     sout = []
-    #     for item in results:
-    #         sout.append(item.tostring())
-    #     string += '\n'.join(sout)
-    #     return string
-
-    # def summary2string(self, summary):
-    #     string = []
-    #     for name, value in zip(Result.SUMMARY_TABLE, summary):
-    #         if type(value) == int:
-    #             string.append(name+":\t"+'{0:5d}'.format(value))
-    #         else:
-    #             string.append(name+":\t"+'{0:.4f}'.format(value))
-    #     return '\n'.join(string)
-
-    # def summary(self, results):
-    #     """Calculate the summary of resutls
-
-    #     Args:
-    #         results: a list of result of each sentence
-
-    #     Returns:
-    #         a list contains all the summary data.
-    #         The data in the list is ordered by Result.SUMMARY_TABLE.
-    #     """
-    #     summay_list = [0] * len(Result.SUMMARY_TABLE)
-
-    #     # Number of sentence
-    #     summay_list[0] = len(results)
-
-    #     # Number of Error sentence
-    #     # 2:Error
-    #     summay_list[1] = len([item for item in results if item.state == 2])
-
-    #     # Number of Skip sentence
-    #     # 1:skip
-    #     summay_list[2] = len([item for item in results if item.state == 1])
-
-    #     correct_results = [item for item in results if item.state == 0]
-
-    #     # Number of Skip sentence
-    #     sentn = summay_list[0] - summay_list[1] - summay_list[2]
-    #     summay_list[3] = sentn
-
-    #     # Bracketing Recall: matched brackets / gold brackets
-    #     summay_list[4] = (sum([item.matched_brackets for
-    #                            item in correct_results]) /
-    #                       sum([item.gold_brackets for
-    #                            item in correct_results]))
-
-    #     # Bracketing Precision: matched brackets / test brackets
-    #     summay_list[5] = (sum([item.matched_brackets for
-    #                           item in correct_results]) /
-    #                       sum([item.test_brackets for
-    #                           item in correct_results]))
-
-    #     # Bracketing FMeasure
-    #     summay_list[6] = ((2 * summay_list[4] * summay_list[5]) /
-    #                       (summay_list[4] + summay_list[5]))
-
-    #     # Complete match
-    #     summay_list[7] = (len([item for item in correct_results
-    #                       if item.matched_brackets == item.gold_brackets and
-    #                       item.matched_brackets ==
-    #                       item.test_brackets]) / sentn * 100)
-
-    #     # Average match
-    #     summay_list[8] = (sum([item.cross_brackets for
-    #                       item in correct_results]) / sentn)
-
-    #     # No crossing
-    #     summay_list[9] = (len([item for item in correct_results
-    #                       if item.cross_brackets == 0]) / sentn * 100)
-
-    #     # Tagging accuracy: total correct tags / total words
-    #     summay_list[10] = (sum([item.correct_tags for item
-    #                        in correct_results]) /
-    #                        sum([item.words for item in correct_results]))
-
-    #     return summay_list
-
-    # def evalb(self, gold_file_name, test_file_name):
-    #     gold_file = open(gold_file_name)
-    #     test_file = open(test_file_name)
-    #     results = self.score_corpus(gold_file, test_file)
-    #     summary = self.summary(results)
-    #     string = []
-
-    #     string.append(self._set_head())
-    #     string.append(self.result2string(results))
-    #     string.append(self._set_tail())
-    #     string.append(self.summary2string(summary))
-    #     return '\n'.join(string)
