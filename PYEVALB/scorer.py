@@ -7,14 +7,16 @@
 # Python release: 3.4.1
 #
 # Date: 2016-10-13 10:02:18
-# Last modified: 2016-10-14 13:27:16
+# Last modified: 2016-10-14 14:35:24
 
 """
 PYEVALB: Evalb in Python version.
 """
 
 from PYEVALB.parser import ParsingError
+from PYEVALB.summary import Result
 from PYEVALB import parser
+from PYEVALB import summary
 
 ############################################################
 # Exceptions
@@ -54,84 +56,6 @@ class WordsUnmatch(ScoreException):
         s += '\n'
         s += '-'*30
         return s
-
-############################################################
-# Result class
-############################################################
-
-
-class Result:
-    """The class of result data
-
-    Attributes:
-        _staticis: is a dict of statistics:
-            ID: the ID of current sentence
-            length: the length of the sentence
-            state:  the state of the current compare  0:OK,1:skip,2:error
-            recall: the recall of the two trees
-                    recall = matched bracketing / brackets of gold data
-            prec:   the precision of the two trees
-                    prec = matched bracketing / brackets of test data
-            matched_brackets: the number of matched brackets
-            gold_brackets: the number of gold brackets
-            test_brackets: the number of test brackets
-            cross_brackets: the number of cross brackets
-            words: the number of unique words
-            correct_tags: the number of correct tags
-            tag_accracy: the accruacy of tags
-    """
-    STATISTICS_TABLE = [
-            'ID', 'length', 'state', 'recall', 'prec', 'matched_brackets',
-            'gold_brackets', 'test_brackets',
-            'cross_brackets', 'words', 'correct_tags', 'tag_accracy'
-            ]
-
-    def __init__(self):
-        self._staticis = dict()
-
-        # Initialize the dict
-        for name in Result.STATISTICS_TABLE:
-            self._staticis[name] = 0
-
-    def tolist(self):
-        reval = []
-        for name in Result.STATISTICS_TABLE:
-            value = self._staticis[name]
-            if type(value) == int:
-                value = '%d' % value
-            else:
-                value = '%.2f' % value
-            reval.append(value)
-        return reval
-
-    def __repr__(self):
-        sout = ''
-        for name in Result.STATISTICS_TABLE:
-            value = self._staticis[name]
-            s = name + ":"
-            if type(value) == int:
-                ss = '{0: >3d}'.format(value)
-            else:
-                ss = '{0: >5.2f}'.format(value*100)
-            sout += (s+ss+' ')
-        return sout
-
-    def __getattr__(self, name):
-        if name == "_staticis":
-            return self.__dict__[name]
-        elif name in Result.STATISTICS_TABLE:
-            return self._staticis.get(name, 0)
-        else:
-            raise AttributeError
-
-    def __setattr__(self, name, value):
-        if name == "_staticis":
-            self.__dict__[name] = value
-        elif name in Result.STATISTICS_TABLE:
-            self._staticis[name] = value
-        else:
-            print(name)
-            raise AttributeError
 
 
 class Scorer:
@@ -249,3 +173,10 @@ class Scorer:
                 current_result.ID = ID
                 results.append(current_result)
         return results
+
+    def evalb(self, gold_path, test_path, result_path):
+        with open(gold_path, encoding='utf8') as gold_f:
+            with open(test_path, encoding='utf8') as test_f:
+                results = self.score_corpus(gold_f, test_f)
+                s = summary.summary(results)
+                summary.write_table(result_path, results, s)
