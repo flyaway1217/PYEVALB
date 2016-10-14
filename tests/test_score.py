@@ -7,7 +7,7 @@
 # Python release: 3.4.1
 #
 # Date: 2016-10-13 13:58:26
-# Last modified: 2016-10-14 09:14:50
+# Last modified: 2016-10-14 14:12:37
 
 """
 Test class for score.py
@@ -16,19 +16,21 @@ from nose.tools import assert_equals
 
 from PYEVALB.scorer import Result
 from PYEVALB.scorer import Scorer
+from PYEVALB import summary
 
 
 assert_equals.__self__.maxDiff = None
 # from nose.tools import assert_not_equals
 # from nose.tools import assert_raises
 
-RESULT_PATH = './data/result.txt'
-GOLD_PATH = './data/gold.txt'
-TEST_PATH = './data/test.txt'
+RESULT_PATH = './data/score/result.txt'
+GOLD_PATH = './data/score/gold.txt'
+TEST_PATH = './data/score/test.txt'
+SUMMARY_PATH = './data/score/summary.txt'
 
-ERROR_RESULT_PATH = './data/result_exception.txt'
-ERROR_GOLD_PATH = './data/gold_exception.txt'
-ERROR_TEST_PATH = './data/test_exception.txt'
+ERROR_RESULT_PATH = './data/score/result_exception.txt'
+ERROR_GOLD_PATH = './data/score/gold_exception.txt'
+ERROR_TEST_PATH = './data/score/test_exception.txt'
 
 
 class TestScorer:
@@ -67,6 +69,25 @@ class TestScorer:
                 results = scorer.score_corpus(gold, test)
         for ans, value in zip(self._true_results, results):
             assert_equals(str(ans), str(value))
+
+    def test_summary(self):
+        scorer = Scorer()
+        with open(GOLD_PATH, encoding='utf8') as gold:
+            with open(TEST_PATH, encoding='utf8') as test:
+                results = scorer.score_corpus(gold, test)
+
+        value = summary.summary(results)
+        value = summary._summary2string(value)
+
+        ans = []
+        with open(SUMMARY_PATH, encoding='utf8') as f:
+                ans = [float(line.strip().split('=')[-1])
+                       for line in f]
+        print(ans)
+        ans = summary.Summary(*ans)
+        ans = summary._summary2string(ans)
+
+        assert_equals(ans, value)
 
     def test_exception(self):
         scorer = Scorer()

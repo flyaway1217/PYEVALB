@@ -7,7 +7,7 @@
 # Python release: 3.4.1
 #
 # Date: 2016-10-12 16:50:12
-# Last modified: 2016-10-13 10:57:39
+# Last modified: 2016-10-14 14:09:05
 
 """
 Test for parser.py
@@ -21,9 +21,9 @@ from PYEVALB import parser
 from PYEVALB.tree import Tree
 
 
-BRACKETED_PATH = './data/BRACKETED.txt'
-POSTAGGED_PATH = './data/POSTAGGED.txt'
-SEGMENTED_PATH = './data/SEGMENTED.txt'
+BRACKETED_PATH = './data/tree/BRACKETED.txt'
+POSTAGGED_PATH = './data/tree/POSTAGGED.txt'
+SEGMENTED_PATH = './data/tree/SEGMENTED.txt'
 
 
 class TestParser:

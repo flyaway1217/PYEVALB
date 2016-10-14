@@ -7,7 +7,7 @@
 # Python release: 3.4.1
 #
 # Date: 2016-10-13 10:02:18
-# Last modified: 2016-10-14 10:09:05
+# Last modified: 2016-10-14 13:27:16
 
 """
 PYEVALB: Evalb in Python version.
@@ -84,13 +84,6 @@ class Result:
             'ID', 'length', 'state', 'recall', 'prec', 'matched_brackets',
             'gold_brackets', 'test_brackets',
             'cross_brackets', 'words', 'correct_tags', 'tag_accracy'
-            ]
-    SUMMARY_TABLE = [
-            'Number of sentence', 'Number of Error sentence',
-            'Number of Skip  sentence', 'Number of Valid sentence',
-            'Bracketing Recall', 'Bracketing Precision',
-            'Bracketing FMeasure', 'Complete match',
-            'Average crossing', 'No crossing', 'Tagging accuracy'
             ]
 
     def __init__(self):
