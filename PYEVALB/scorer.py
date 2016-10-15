@@ -7,16 +7,16 @@
 # Python release: 3.4.1
 #
 # Date: 2016-10-13 10:02:18
-# Last modified: 2016-10-14 14:35:24
+# Last modified: 2016-10-15 17:19:14
 
 """
 PYEVALB: Evalb in Python version.
 """
 
-from PYEVALB.parser import ParsingError
-from PYEVALB.summary import Result
-from PYEVALB import parser
-from PYEVALB import summary
+from .parser import ParsingError
+from .summary import Result
+from . import parser
+from . import summary
 
 ############################################################
 # Exceptions

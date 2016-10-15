@@ -7,7 +7,7 @@
 # Python release: 3.4.1
 #
 # Date: 2016-10-12 09:29:56
-# Last modified: 2016-10-12 20:17:36
+# Last modified: 2016-10-15 17:16:55
 
 """
 Create tree structures from string.
@@ -21,8 +21,8 @@ Create tree structures from string.
 
 import collections
 
-from PYEVALB.tree import Node
-from PYEVALB.tree import Tree
+from .tree import Node
+from .tree import Tree
 
 
 class ParsingError(Exception):
