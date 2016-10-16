@@ -1,23 +1,32 @@
-# PYEVALB
+PYEVALB
+=========
 
-EVEVALB is a python version of [Evalb][] which is used to score the bracket tree banks.
+EVEVALB is a python version of Evalb_ which is used to score the bracket tree banks.
 
-# Examples
+Installation
+=============
+::
 
-## Score two corpus
+    pip install PYEVALB
 
-```python
-from PYEVALB import scorer
+Examples
+=========
 
-gold_path = 'gold_corpus.txt'
-test_path = 'test_corpus.txt'
-result_path = 'result.txt'
+Score two corpus
+----------------
 
-scorer.evalb(gold_path, test_path, result_path)
-```
+.. code:: python
+
+    from PYEVALB import scorer
+
+    gold_path = 'gold_corpus.txt'
+    test_path = 'test_corpus.txt'
+    result_path = 'result.txt'
+
+    scorer.evalb(gold_path, test_path, result_path)
 
 And the result would be:
-```Markdown
+.. code:: markdown
 
  ID | length | state | recall | prec | matched_brackets | gold_brackets | test_brackets | cross_brackets | words | correct_tags | tag_accracy 
 ---:|-------:|------:|-------:|-----:|-----------------:|--------------:|--------------:|---------------:|------:|-------------:|------------:
@@ -44,33 +53,31 @@ Complete match:	10.00
 Average crossing:	4.30
 No crossing:	50.00
 Tagging accuracy:	95.65
-```
 
-## Score two trees
+Score two trees
+---------------
 
-```python
-from PYEVALB import scorer
-from PYEVALB import parser
+.. code:: python
+    from PYEVALB import scorer
+    from PYEVALB import parser
 
-gold = '(IP (NP (PN 这里)) (VP (ADVP (AD 便)) (VP (VV 产生) (IP (NP (QP (CD 一) (CLP (M 个))) (DNP (NP (JJ 结构性)) (DEG 的)) (NP (NN 盲点))) (PU ：) (IP (VP (VV 臭味相投) (PU ，) (VV 物以类聚)))))) (PU 。))'
+    gold = '(IP (NP (PN 这里)) (VP (ADVP (AD 便)) (VP (VV 产生) (IP (NP (QP (CD 一) (CLP (M 个))) (DNP (NP (JJ 结构性)) (DEG 的)) (NP (NN 盲点))) (PU ：) (IP (VP (VV 臭味相投) (PU ，) (VV 物以类聚)))))) (PU 。))'
 
-test = '(IP (IP (NP (PN 这里)) (VP (ADVP (AD 便)) (VP (VV 产生) (NP (QP (CD 一) (CLP (M 个))) (DNP (ADJP (JJ 结构性)) (DEG 的)) (NP (NN 盲点)))))) (PU ：) (IP (NP (NN 臭味相投)) (PU ，) (VP (VV 物以类聚))) (PU 。))'
+    test = '(IP (IP (NP (PN 这里)) (VP (ADVP (AD 便)) (VP (VV 产生) (NP (QP (CD 一) (CLP (M 个))) (DNP (ADJP (JJ 结构性)) (DEG 的)) (NP (NN 盲点)))))) (PU ：) (IP (NP (NN 臭味相投)) (PU ，) (VP (VV 物以类聚))) (PU 。))'
 
-gold_tree = parser.create_from_bracket_string(gold)
-test_tree = parser.create_from_bracket_string(test)
+    gold_tree = parser.create_from_bracket_string(gold)
+    test_tree = parser.create_from_bracket_string(test)
 
-result = scorer.score_trees(gold_tree, test_tree)
+    result = scorer.score_trees(gold_tree, test_tree)
 
-print('Recall =' + str(result.recall))
-print('Precision =' + str(result.prec))
-```
+    print('Recall =' + str(result.recall))
+    print('Precision =' + str(result.prec))
 
 And the result is:
 
-```bash
-Recall = 64.29
-Precision =  56.25
-```
+.. code:: bash
+    Recall = 64.29
+    Precision =  56.25
 
 
-[Evalb]: http://nlp.cs.nyu.edu/evalb/
+.. _Evalb: http://nlp.cs.nyu.edu/evalb/
