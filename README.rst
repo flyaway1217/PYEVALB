@@ -59,6 +59,7 @@ Score two trees
 ---------------
 
 .. code:: python
+
     from PYEVALB import scorer
     from PYEVALB import parser
 
