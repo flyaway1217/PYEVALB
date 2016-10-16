@@ -12,7 +12,7 @@ install:
 
 script: 
     - nosetests
-    - coverage run --source=PYEVALB setup.py test
+    - python setup.py test --addopts "-v --cov PYEVALB --cov-report term-missing"""
 
 after_success:
     coveralls
