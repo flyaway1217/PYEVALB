@@ -76,7 +76,7 @@ Score two trees
 
 And the result is:
 
-.. code:: bash
+.. code::
 
     Recall = 64.29
     Precision =  56.25
