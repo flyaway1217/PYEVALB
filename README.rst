@@ -1,6 +1,9 @@
 PYEVALB
 =========
 
+.. image:: https://travis-ci.org/flyaway1217/PYEVALB.svg?branch=master
+    :target: https://travis-ci.org/flyaway1217/PYEVALB
+
 EVEVALB is a python version of Evalb_ which is used to score the bracket tree banks.
 
 Installation
