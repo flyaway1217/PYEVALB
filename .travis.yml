@@ -8,5 +8,11 @@ python:
 install: 
     - pip install -r requirements/requirements.txt
     - pip install -r requirements/test-requirements.txt
+    - pip install coveralls
 
-script: nosetests
+script: 
+    - nosetests
+    - coverage run --source=PYEVALB setup.py test
+
+after_success:
+    coveralls
