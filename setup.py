@@ -3,7 +3,7 @@ from setuptools.command.test import test as TestCommand
 import sys
 import os
 
-# import PYEVALB
+import PYEVALB
 
 
 PACKAGE_NAME = 'PYEVALB'
@@ -38,8 +38,8 @@ class Tox(TestCommand):
 
 setup(
     name=PACKAGE_NAME,
-    # version=PYEVALB.__version__,
-    version='0.1.1',
+    version=PYEVALB.__version__,
+    # version='0.1.1',
     packages=['PYEVALB', ],
     url='https://github.com/flyaway1217/PYEVALB',
     license='GNU',
@@ -49,12 +49,12 @@ setup(
     author_email='flyaway1217@gmail.com',
 
     description='Scoring tools for bracket tree banks.',
-    long_description=open('README.md', encoding='utf8').read(),
+    long_description=open('README.rst', encoding='utf8').read(),
     cmdclass={'test': Tox},
 
     include_package_data=True,
     install_requires=install_require,
-    tests_requires=tests_require,
+    tests_require=tests_require,
     entry_points={
         'console_scripts': [
             'PYEVALB = PYEVALB.__main__:main'

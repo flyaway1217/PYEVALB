@@ -27,7 +27,7 @@ Score two corpus
 
 And the result would be:
 
-.. code:: markdown
+.. code::
 
      ID | length | state | recall | prec | matched_brackets | gold_brackets | test_brackets | cross_brackets | words | correct_tags | tag_accracy 
     ---:|-------:|------:|-------:|-----:|-----------------:|--------------:|--------------:|---------------:|------:|-------------:|------------:
