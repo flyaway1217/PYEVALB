@@ -37,24 +37,38 @@ class Tox(TestCommand):
         sys.exit(errcode)
 
 setup(
-    tests_require=['tox'],
-    cmdclass={'test': Tox},
-    )
-
-setup(
     name=PACKAGE_NAME,
     # version=PYEVALB.__version__,
-    version='0.1.0',
+    version='0.1.1',
     packages=['PYEVALB', ],
     url='https://github.com/flyaway1217/PYEVALB',
+    license='GNU',
+    keywords='score bracket tree banks',
 
     author='Flyaway',
     author_email='flyaway1217@gmail.com',
 
     description='Scoring tools for bracket tree banks.',
     long_description=open('README.md', encoding='utf8').read(),
+    cmdclass={'test': Tox},
 
     include_package_data=True,
     install_requires=install_require,
-    tests_requires=tests_require
+    tests_requires=tests_require,
+    entry_points={
+        'console_scripts': [
+            'PYEVALB = PYEVALB.__main__:main'
+            ]
+        },
+
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
+        'Intended Audience :: Developers',
+        'Topic :: Software Development :: Build Tools',
+        'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        ]
 )
