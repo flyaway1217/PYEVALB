@@ -91,6 +91,7 @@ TODO
 
 1. Remove the dependency of pytablewriter_
 2. Add more configurations, such as limiting the length of sentence.
+3. Add docs
 
 .. _Evalb: http://nlp.cs.nyu.edu/evalb/
 .. _pytablewriter: https://github.com/thombashi/pytablewriter/blob/master/README.rst
