@@ -91,3 +91,4 @@ ENV/
 
 # For Mac
 .DS_Store
+data/score/
