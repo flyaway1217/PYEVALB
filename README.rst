@@ -22,11 +22,12 @@ Score two corpus
 
     from PYEVALB import scorer
 
+    s = scorer.Scorer()
     gold_path = 'gold_corpus.txt'
     test_path = 'test_corpus.txt'
     result_path = 'result.txt'
 
-    scorer.evalb(gold_path, test_path, result_path)
+    s.evalb(gold_path, test_path, result_path)
 
 And the result would be:
 
@@ -73,7 +74,8 @@ Score two trees
     gold_tree = parser.create_from_bracket_string(gold)
     test_tree = parser.create_from_bracket_string(test)
 
-    result = scorer.score_trees(gold_tree, test_tree)
+    s = scorer.Scorer()
+    result = s.score_trees(gold_tree, test_tree)
 
     print('Recall =' + str(result.recall))
     print('Precision =' + str(result.prec))
